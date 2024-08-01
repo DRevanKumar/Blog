@@ -11,12 +11,12 @@ export default function EditPost() {
   const [content, setContent] = useState('');
   const [files, setFiles] = useState('');
   const [cover, setCover] = useState('');
+  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
     async function fetchPost() {
       try {
         const response = await axios.get(`http://localhost:3000/createPost/${id}`);
-        
         setTitle(response.data.title);
         setSummary(response.data.summary);
         setContent(response.data.content);
@@ -54,57 +54,93 @@ export default function EditPost() {
     }
   }
 
-  return (
-    <div className="max-w-3xl mx-auto p-4 sm:p-6 lg:p-8">
-      <form onSubmit={updatePost} className="space-y-6">
-        <div className="relative z-0 w-full mb-5 group">
-          <input
+  const handleFileChange = (e) => {
+    setFiles(e.target.files);
+    if (e.target.files && e.target.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => setImagePreview(e.target.result);
+        reader.readAsDataURL(e.target.files[0]);
+    }
+};
+
+return (
+  <div className="flex flex-col lg:flex-row max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 bg-white rounded-lg shadow-lg h-screen">
+    <div className="lg:w-1/2 flex flex-col pr-4 h-full">
+      <h1 className="text-2xl sm:text-3xl font-semibold mb-6 text-center text-gray-800">Edit Post</h1>
+      <form onSubmit={updatePost} className="flex flex-col space-y-6 p-4 border border-gray-300 rounded-lg shadow-sm bg-gray-50 flex-grow overflow-y-auto">
+        <div className="relative">
+          <input 
             type="text"
             value={title}
             onChange={e => setTitle(e.target.value)}
-            className="block py-2.5 px-0 w-full text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            className="block w-full py-2 px-3 text-gray-800 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 peer"
             placeholder=" "
             required
           />
-          <label className="peer-focus:font-medium absolute text-md sm:text-xl text-gray-800 dark:text-gray-700 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+          <label className="absolute text-md text-gray-500 dark:text-gray-700 duration-300 transform -translate-y-8 scale-75 top-3 left-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">
             Title
           </label>
         </div>
-        <div className="relative z-0 w-full mb-5 group">
+        <div className="relative">
           <input
             type="text"
             value={summary}
             onChange={e => setSummary(e.target.value)}
-            className="block py-2.5 px-0 w-full text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            className="block w-full py-2 px-3 text-gray-800 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 peer"
             placeholder=" "
             required
           />
-          <label className="peer-focus:font-medium absolute text-md sm:text-xl text-gray-800 dark:text-gray-700 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+          <label className="absolute text-md text-gray-500 dark:text-gray-700 duration-300 transform -translate-y-8 scale-75 top-3 left-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">
             Summary
           </label>
         </div>
-        <div className="relative z-0 w-full mb-5 group">
-          <input
+        <div className="relative">
+          <input 
             type="file"
-            onChange={e => setFiles(e.target.files)}
-            className="block py-2.5 px-0 w-full text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            placeholder=" "
+            onChange={handleFileChange}
+            className="block w-full text-gray-800 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
           />
-          <label className="peer-focus:font-medium absolute text-md sm:text-xl text-gray-900 dark:text-gray-900 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-            Image
-          </label>
-          {cover && (
-            <p className="text-md text-gray-700 mt-1">{cover}</p>
-          )}
+          {/* <label className="absolute text-md sm:text-xl text-gray-800 dark:text-gray-700 duration-300 transform -translate-y-6 scale-75 top-3 left-3 z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+           Image
+         </label> */}
+         {!imagePreview && (
+           <p className="text-md text-gray-700 mt-1">{cover}</p>
+         )}
         </div>
-        <Editor value={content} onChange={setContent} />
-        <button
-          type="submit"
-          className="w-full sm:w-auto py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          Submit Post
-        </button>
+        <div className="relative overflow-y-auto flex-grow bg-gray-50 p-4 border border-gray-300 rounded-lg shadow-sm">
+          <Editor value={content} onChange={setContent} />
+        </div>
+        <div className="sticky bottom-0 bg-gray-50 pt-4">
+          <button
+            type="submit"
+            className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Submit Post
+          </button>
+        </div>
       </form>
     </div>
-  );
+    <div className="lg:w-1/2 flex flex-col mt-6 lg:mt-0 h-full">
+      <h2 className="text-xl font-semibold mb-4 text-center text-gray-800">Live Preview</h2>
+      <div className="flex-grow p-4 border border-gray-300 rounded-lg shadow-sm bg-gray-50 overflow-y-auto">
+        <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 mb-10"> 
+          <h1 className="text-3xl sm:text-4xl md:text-3xl font-bold mb-4 text-center font-serif">{title}</h1>
+          {!imagePreview && (
+            <div className="mb-6">
+              <img className="w-full h-auto max-h-80 sm:max-h-96 object-cover rounded-lg" src={`http://localhost:3000/uploads/${cover}`} alt={title} />
+            </div>
+          )}
+          {imagePreview && (
+            <div className="mb-6">
+              <img className="w-full h-auto max-h-80 sm:max-h-96 object-cover rounded-lg" src={imagePreview} alt={title} />
+            </div>
+          )}
+          <div className="prose prose-sm sm:prose-base lg:prose-lg mx-auto">
+            <div dangerouslySetInnerHTML={{ __html: content }} />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
 }
