@@ -1,8 +1,23 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Blogging Website
 
-Currently, two official plugins are available:
+A full-stack blogging website built using the MERN stack (MongoDB, Express, React, Node.js).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## Features
+
+- User authentication (register, login)
+- Create, edit, delete, and view blog posts 
+- Upload images for blog posts
+- View blog posts by different authors
+- Responsive design using Tailwind CSS
+
+
+
+## Technologies used
+- Frontend: React, Tailwind CSS
+- Backend: Node.js, Express
+- Database: MongoDB
+- Authentication: JSON Web Tokens (JWT)
+- File Upload: Multer
+
