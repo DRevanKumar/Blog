@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
+import { Backend_Url } from "../config";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -14,7 +15,7 @@ export default function Register() {
   async function register(e) {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/register", {
+      const response = await axios.post(`${Backend_Url}/register`, {
         username,
         password,
         confirmpassword

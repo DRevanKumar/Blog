@@ -3,6 +3,7 @@ import { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "./UserContext";
+import { Backend_Url } from "./config";
 
 export default function Header() {
   const { userinfo, setUserInfo } = useContext(UserContext);
@@ -17,7 +18,7 @@ export default function Header() {
           return;
         }
 
-        const response = await axios.get("http://localhost:3000/profile", {
+        const response = await axios.get(`${Backend_Url}/profile`, {
           headers: {
             Authorization: token
           }

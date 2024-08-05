@@ -3,6 +3,7 @@ import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
 import Editor from "../Editorial";
 import { useNavigate } from "react-router-dom";
+import { Backend_Url } from "../config";
 
 function CreatePost() {
     const navigate = useNavigate();
@@ -22,7 +23,7 @@ function CreatePost() {
         }
         data.set('content', content);
         
-        axios.post("http://localhost:3000/createPost", data, {
+        axios.post(`${Backend_Url}/createPost`, data, {
             headers: {
                 Authorization: localStorage.getItem('token')
             }

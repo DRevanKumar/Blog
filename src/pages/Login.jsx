@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
+import { Backend_Url } from "../config";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -12,7 +13,7 @@ export default function Login() {
     async function login(e) {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:3000/login", {
+            const response = await axios.post(`${Backend_Url}/login`, {
                 username,
                 password
             });

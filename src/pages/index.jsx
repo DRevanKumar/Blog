@@ -1,6 +1,7 @@
 import Post from "../Post";
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import { Backend_Url } from "../config";
 
 export default function IndexPage() {
   const [posts, setPosts] = useState([]);
@@ -8,7 +9,7 @@ export default function IndexPage() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/createPost");
+        const response = await axios.get(`${Backend_Url}/createPost`);
         setPosts(response.data);
       } catch (error) {
         console.error('Error fetching posts:', error);

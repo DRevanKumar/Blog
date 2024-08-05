@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
+import { Backend_Url } from "./config";
 
 export default function Post({_id, title, summary, cover, updatedAt, author}) {
   return (
@@ -8,7 +9,7 @@ export default function Post({_id, title, summary, cover, updatedAt, author}) {
         <div className="w-full h-48 md:h-64 overflow-hidden col-span-1">
           <img
             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-            src={`http://localhost:3000/${cover}`}
+            src={`${Backend_Url}/${cover}`}
             alt={title}
           />
         </div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Editor from "../Editorial";
 import axios from 'axios';
+import { Backend_Url } from "../config";
 
 export default function EditPost() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function EditPost() {
   useEffect(() => {
     async function fetchPost() {
       try {
-        const response = await axios.get(`http://localhost:3000/createPost/${id}`);
+        const response = await axios.get(`${Backend_Url}/createPost/${id}`);
         setTitle(response.data.title);
         setSummary(response.data.summary);
         setContent(response.data.content);
@@ -41,7 +42,7 @@ export default function EditPost() {
     }
 
     try {
-      const response = await axios.put('http://localhost:3000/createPost', data, {
+      const response = await axios.put(`${Backend_Url}/createPost`, data, {
         headers: {
           Authorization: localStorage.getItem('token'),
         },

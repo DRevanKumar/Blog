@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { UserContext } from "../UserContext";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Backend_Url } from "../config";
 
 export function PostPage() {
     const { userinfo } = useContext(UserContext);
@@ -15,7 +16,7 @@ export function PostPage() {
     useEffect(() => {
         async function fetchPost() {
             try {
-                const response = await axios.get(`http://localhost:3000/createPost/${id}`);
+                const response = await axios.get(`${Backend_Url}/createPost/${id}`);
                 setPost(response.data);
                
             } catch (error) {
@@ -28,7 +29,7 @@ export function PostPage() {
 
     async function DeletePost(){
         try{
-            const response = await axios.delete(`http://localhost:3000/post/${id}`)
+            const response = await axios.delete(`${Backend_Url}/post/${id}`)
             if(response.status===200){
                 alert("post deleted")
                 navigate('/')
@@ -71,7 +72,7 @@ export function PostPage() {
             )}
 
             <div className="mb-6">
-                <img className="w-full h-auto max-h-80 sm:max-h-96 object-cover rounded-lg" src={`http://localhost:3000/${post.cover}`} alt={post.title} />
+                <img className="w-full h-auto max-h-80 sm:max-h-96 object-cover rounded-lg" src={`${Backend_Url}/${post.cover}`} alt={post.title} />
             </div>
 
             <div className="prose prose-sm sm:prose-base lg:prose-lg mx-auto">
